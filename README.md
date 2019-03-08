@@ -22,13 +22,13 @@ cache [:saved, product] do
 end
 ```
 
-## Require Configuration
+## Configuration
 
-A cache function must be set before this plugin will cache.  The
-function must take the key as an argument and a block for when there is
-a cache miss.
+The cache function can be set to work with an apps implementation of
+caching.  The function must take the key as an argument and a block
+for when there is a cache miss.
 
-With Rails this can be:
+With Rails it will default to:
 
 ```
 Voom::Presenters::Plugins::Cacheable::Settings.configure do |config|

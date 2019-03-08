@@ -7,7 +7,7 @@ module Voom
 
         class Settings
           extend Dry::Configurable
-          setting :cache_func, nil
+          setting :cache_func, defined?(Rails) ? Rails.cache.method(:fetch) : nil
         end
 
         module DSLComponents
