@@ -1,0 +1,31 @@
+require 'ostruct'
+require 'voom/presenters/plugins/cacheable'
+
+Voom::Presenters.define(:simple_cache_key) do
+  plugin :cacheable
+
+  cache :remember_me do
+    title 'Foo'
+  end
+end
+
+Voom::Presenters.define(:complex_cache_key) do
+  plugin :cacheable
+
+  helpers do
+    def cache_object
+      OpenStruct.new(cache_key: 'wild')
+    end
+
+    def cache_objects
+      [
+        OpenStruct.new(cache_key: 'abc'),
+        OpenStruct.new(cache_key: '123'),
+      ]
+    end
+  end
+
+  cache [:title, cache_object, cache_objects] do
+    title 'Cached'
+  end
+end
