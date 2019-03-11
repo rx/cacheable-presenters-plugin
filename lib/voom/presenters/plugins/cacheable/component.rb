@@ -1,5 +1,12 @@
 require 'voom/presenters/dsl/components/base'
-require 'voom/presenters/dsl/components/mixins/common'
+require 'voom/presenters/pluggable'
+
+gem_dir = Gem::Specification.find_by_name('voom-presenters').gem_dir
+mixins_dir = File.join(gem_dir, 'lib', 'voom', 'presenters', 'dsl', 'components', 'mixins')
+
+Dir[File.join(mixins_dir, '*.rb')].each do |file|
+  require File.join(mixins_dir, File.basename(file, File.extname(file)))
+end
 
 module Voom
   module Presenters
@@ -7,7 +14,13 @@ module Voom
       module Cacheable
 
         class Component < DSL::Components::Base
-          include DSL::Components::Mixins::Common
+          DSL::Components::Mixins.constants(false).each do |mixin|
+            const = DSL::Components::Mixins.const_get(mixin)
+            include const if const.is_a?(Module)
+          end
+
+          extend Pluggable
+          include_plugins(:DSLComponents)
 
           attr_reader :cache_key, :components
 
