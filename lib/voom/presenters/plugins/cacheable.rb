@@ -21,7 +21,7 @@ module Voom
             render_proc = Proc.new { render.call :erb, :'components/render', locals: { components: comp.components, scope: nil } }
 
             if cache_func = Settings.config.cache_func
-              cache_func.call comp.cache_key, &render_proc
+              cache_func.call comp.cache_key, comp.attribs, &render_proc
             else
               render_proc.call
             end
