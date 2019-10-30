@@ -1,5 +1,5 @@
-require_relative 'cacheable/component'
-require_relative 'cacheable/mixins/cache_store'
+load File.expand_path('./cacheable/component.rb', __dir__)
+load File.expand_path('./cacheable/mixins/cache_store.rb', __dir__)
 
 module Voom
   module Presenters
@@ -19,7 +19,7 @@ module Voom
         end
 
         module WebClientComponents
-          include Mixins::CacheStore
+          include Cacheable::Mixins::CacheStore
           def render_cacheable(comp, render:, components:, index:)
             render_proc = Proc.new { render.call :erb, :'components/render', locals: { components: comp.components, scope: nil } }
 
