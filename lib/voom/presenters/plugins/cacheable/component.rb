@@ -1,6 +1,7 @@
+
 require 'voom/presenters/dsl/components/base'
 require 'voom/presenters/pluggable'
-require 'voom/presenters/plugins/cacheable/mixins/cache_store'
+load File.expand_path('./cacheable/mixins/cache_store.rb', __dir__)
 
 gem_dir = Gem::Specification.find_by_name('voom-presenters').gem_dir
 mixins_dir = File.join(gem_dir, 'lib', 'voom', 'presenters', 'dsl', 'components', 'mixins')
